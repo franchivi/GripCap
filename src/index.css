@@ -5,14 +5,8 @@
 html { scroll-behavior: smooth; }
 
 body {
-  @apply bg-ink text-zinc-200 font-sans antialiased selection:bg-racing selection:text-black;
-  background-color: #111216;
-  background-image:
-    radial-gradient(ellipse at 50% 0%, rgba(20, 133, 238, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, rgba(255, 98, 25, 0.07) 0%, transparent 40%),
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+  @apply bg-ink-darker text-zinc-200 font-sans antialiased selection:bg-racing selection:text-black;
+  background-color: #0d0e12;
 }
 
 @layer components {
@@ -23,7 +17,7 @@ body {
     clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
   }
   .glass {
-    @apply bg-ink-surface/80 backdrop-blur-md border border-ink-border shadow-[0_12px_32px_rgba(0,0,0,0.5)];
+    @apply bg-ink-surface/85 backdrop-blur-md border border-ink-border shadow-[0_12px_32px_rgba(0,0,0,0.6)];
   }
   .tech-card {
     @apply glass bevel relative transition-all duration-300;

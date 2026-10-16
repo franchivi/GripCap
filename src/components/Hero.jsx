@@ -19,9 +19,9 @@ export default function Hero() {
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
           <div className="relative mb-6 inline-block">
             <img
-              src={asset('logo-3d.jpg')}
+              src={asset('logo-3d.png')}
               alt="BikeCap Logo"
-              className="w-full max-w-md filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.8)] mix-blend-lighten"
+              className="w-full max-w-md filter drop-shadow-[0_16px_32px_rgba(0,0,0,0.9)]"
             />
           </div>
 

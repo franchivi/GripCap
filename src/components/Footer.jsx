@@ -3,10 +3,10 @@ import { asset } from '../data'
 
 export default function Footer() {
   return (
-    <footer className="border-t border-zinc-800 bg-zinc-950">
+    <footer className="border-t border-ink-border bg-ink-darker/95 backdrop-blur-md">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3">
         <div>
-          <img src={asset('logo-3d.jpg')} alt="BikeCap" className="w-56 mix-blend-lighten" />
+          <img src={asset('logo-3d.png')} alt="BikeCap" className="w-56 filter drop-shadow-md" />
           <p className="mt-2 text-sm text-zinc-500">BikeCap - Handmade & Engineered for Bikes</p>
           <div className="mt-5 flex gap-3">
             {[Instagram, Youtube, Facebook].map((Icon, i) => (
