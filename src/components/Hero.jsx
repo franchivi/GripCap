@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Droplets, Flame, Bike, ArrowRight, Users, Sparkles } from 'lucide-react'
+import { Droplets, Flame, Bike, ArrowRight, Sparkles } from 'lucide-react'
 import { asset } from '../data'
 
 const stats = [
@@ -28,7 +28,7 @@ export default function Hero() {
           <div>
             <span className="bevel-sm inline-flex items-center gap-2 border border-racing/40 bg-racing/10 px-4 py-2 font-display text-[11px] font-bold uppercase tracking-[0.25em] text-racing">
               <Sparkles size={13} className="text-racing" />
-              Tapones de Customizados premium
+              Tapones  Customizados premium
             </span>
           </div>
 
@@ -40,15 +40,12 @@ export default function Hero() {
           </h1>
 
           <p className="mt-6 max-w-xl text-base leading-relaxed text-zinc-300 sm:text-lg">
-            Tapones de manillar de ultra-rendimiento. Cuerpo amortiguador en TPU elástico impreso en 3D + chapa frontal de aluminio anodizado  <span className="font-semibold text-racing"></span> y <span className="font-semibold text-anod"></span> grabadoa láser.
+            Tapones de manillar de ultra-rendimiento. Cuerpo amortiguador en TPU elástico impreso en 3D + chapa frontal de aluminio anodizado grabado a láser.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a id="hero-cta-sim" href="#simulador" className="btn-primary">
               Diseñar mis tapones <ArrowRight size={16} />
-            </a>
-            <a id="hero-cta-clubs" href="#clubes" className="btn-ghost">
-              <Users size={16} /> Lotes para Clubes
             </a>
           </div>
         </motion.div>
