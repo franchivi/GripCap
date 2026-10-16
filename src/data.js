@@ -24,15 +24,40 @@ export const unitPrice = (pairs, extra = 0) =>
 export const eur = (n) =>
   new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(n)
 
+// Colores basados en la identidad visual del logo 3D:
+// 1. Titanio Carbón / Gunmetal anodizado
+// 2. Naranja Racing corte bisel
+// 3. Azul Eléctrico destello
+// 4. Plata Cruda / Aluminio mecanizado CNC
 export const COLORS = [
-  { id: 'black', name: 'Negro mate anodizado', hex: '#1b1d22',
-    gradient: 'conic-gradient(from 20deg, #25282e, #101216, #2c3036, #0d0f12, #25282e, #14161a, #2b2f35, #25282e)' },
-  { id: 'silver', name: 'Plata cepillada', hex: '#c8ccd2',
-    gradient: 'conic-gradient(from 20deg, #e6e9ed, #9aa0a8, #f2f4f6, #888e97, #e6e9ed, #a7adb5, #f0f2f4, #e6e9ed)' },
-  { id: 'blue', name: 'Azul eléctrico', hex: '#0088FF',
-    gradient: 'conic-gradient(from 20deg, #2aa0ff, #0058b8, #4db4ff, #004a9c, #2aa0ff, #0068d0, #55b8ff, #2aa0ff)' },
-  { id: 'red', name: 'Rojo competición', hex: '#e11d2e',
-    gradient: 'conic-gradient(from 20deg, #ff3b4a, #a30e1b, #ff5a66, #8f0a16, #ff3b4a, #c4121f, #ff5560, #ff3b4a)' },
+  {
+    id: 'gunmetal',
+    name: 'Titanio Gunmetal (Logo)',
+    hex: '#3E424B',
+    gradient: 'conic-gradient(from 25deg, #4A4F5C, #282B33, #636A7A, #1C1E23, #4A4F5C, #24272D, #555B69, #4A4F5C)',
+    rimAccent: '#FF6219',
+  },
+  {
+    id: 'orange',
+    name: 'Naranja Racing (Logo)',
+    hex: '#FF6219',
+    gradient: 'conic-gradient(from 25deg, #FF7B33, #D44E0E, #FF9558, #B83D05, #FF7B33, #CF4708, #FFA069, #FF7B33)',
+    rimAccent: '#1485EE',
+  },
+  {
+    id: 'blue',
+    name: 'Azul Eléctrico (Logo)',
+    hex: '#1485EE',
+    gradient: 'conic-gradient(from 25deg, #2A9AFF, #0E68C2, #5CB4FF, #0A529C, #2A9AFF, #0E62B5, #67BAFF, #2A9AFF)',
+    rimAccent: '#FF6219',
+  },
+  {
+    id: 'silver',
+    name: 'Aluminio Mecanizado',
+    hex: '#CBD1DB',
+    gradient: 'conic-gradient(from 25deg, #E6EAF0, #9DA4B0, #F4F6F9, #838A96, #E6EAF0, #A6ADBA, #F0F3F7, #E6EAF0)',
+    rimAccent: '#1485EE',
+  },
 ]
 
 export const FONTS = [
@@ -43,6 +68,6 @@ export const FONTS = [
 ]
 
 export const GRIPS = [
-  { id: 'foam', name: 'Puño espuma', ring: '#2a2c31' },
-  { id: 'silicone', name: 'Puño silicona', ring: '#3a3d44' },
+  { id: 'foam', name: 'Puño espuma', ring: '#21232A' },
+  { id: 'silicone', name: 'Puño silicona', ring: '#2D313B' },
 ]

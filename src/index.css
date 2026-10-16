@@ -5,31 +5,42 @@
 html { scroll-behavior: smooth; }
 
 body {
-  @apply bg-ink text-zinc-200 font-sans antialiased;
+  @apply bg-ink text-zinc-200 font-sans antialiased selection:bg-racing selection:text-black;
+  background-color: #111216;
   background-image:
-    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-  background-size: 40px 40px;
+    radial-gradient(ellipse at 50% 0%, rgba(20, 133, 238, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(255, 98, 25, 0.07) 0%, transparent 40%),
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
 }
-
-::selection { background: #FF5500; color: #000; }
 
 @layer components {
-  .bevel { clip-path: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px)); }
-  .bevel-sm { clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px)); }
-  .glass { @apply bg-zinc-900/60 backdrop-blur-md border border-zinc-800; }
-  .tech-card { @apply glass bevel relative; }
-  .section-tag { @apply font-display text-xs font-bold uppercase tracking-[0.3em] text-racing; }
-  .section-title { @apply font-display text-3xl sm:text-5xl font-bold uppercase leading-tight text-white; }
+  .bevel {
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+  }
+  .bevel-sm {
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+  .glass {
+    @apply bg-ink-surface/80 backdrop-blur-md border border-ink-border shadow-[0_12px_32px_rgba(0,0,0,0.5)];
+  }
+  .tech-card {
+    @apply glass bevel relative transition-all duration-300;
+  }
+  .section-tag {
+    @apply font-display text-xs font-bold uppercase tracking-[0.3em] text-racing;
+  }
+  .section-title {
+    @apply font-display text-3xl sm:text-5xl font-bold uppercase leading-tight text-white;
+  }
   .btn-primary {
-    @apply bevel-sm inline-flex items-center justify-center gap-2 bg-racing px-6 py-3 font-display text-sm font-bold uppercase tracking-wider text-black transition hover:bg-racing-soft hover:shadow-[0_0_30px_rgba(255,85,0,0.5)] active:scale-95;
+    @apply bevel-sm inline-flex items-center justify-center gap-2 bg-gradient-to-r from-racing to-racing-glow px-6 py-3 font-display text-sm font-bold uppercase tracking-wider text-black shadow-[0_0_25px_rgba(255,98,25,0.4)] transition hover:brightness-110 hover:shadow-[0_0_35px_rgba(255,98,25,0.6)] active:scale-95;
   }
   .btn-ghost {
-    @apply bevel-sm inline-flex items-center justify-center gap-2 border border-zinc-700 bg-zinc-900/50 px-6 py-3 font-display text-sm font-bold uppercase tracking-wider text-white transition hover:border-anod hover:text-anod active:scale-95;
+    @apply bevel-sm inline-flex items-center justify-center gap-2 border border-ink-border bg-ink-surface/90 px-6 py-3 font-display text-sm font-bold uppercase tracking-wider text-white shadow-[0_4px_16px_rgba(0,0,0,0.4)] transition hover:border-anod hover:text-anod hover:shadow-[0_0_25px_rgba(20,133,238,0.35)] active:scale-95;
   }
   .input {
-    @apply w-full border border-zinc-800 bg-zinc-950/80 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-racing;
+    @apply w-full border border-ink-border bg-ink-darker/90 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-racing focus:ring-1 focus:ring-racing;
   }
 }
-
-@keyframes scan { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
