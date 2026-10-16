@@ -70,14 +70,14 @@ export default function Hero() {
           />
           <div className="absolute inset-12 overflow-hidden rounded-full border-4 border-ink-border shadow-[0_0_80px_rgba(255,98,25,0.35)]">
             <img
-              src={asset('gallery/pair.jpg')}
-              alt="Par de tapones GripCap con grabado láser"
+              src={asset('gallery/trotacerros.jpg')}
+              alt="Tapón GripCap Trotacerros MTB con grabado láser"
               className="h-full w-full object-cover"
             />
           </div>
 
           <div className="bevel-sm absolute -right-2 bottom-10 border border-ink-border bg-ink-surface/90 px-4 py-2 font-display text-xs backdrop-blur shadow-lg">
-            <span className="text-racing font-bold">●</span> Ø 19–22 mm <span className="text-anod font-bold">MTB/Gravel</span>
+            <span className="text-racing font-bold">●</span> Ø 19–22 mm <span className="text-anod font-bold">MTB/Gravel/Road</span>
           </div>
         </motion.div>
       </div>
