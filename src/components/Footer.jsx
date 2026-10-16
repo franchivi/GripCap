@@ -6,8 +6,8 @@ export default function Footer() {
     <footer className="border-t border-ink-border bg-ink-darker/95 backdrop-blur-md">
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3">
         <div>
-          <img src={asset('logo-3d.png')} alt="BikeCap" className="w-56 filter drop-shadow-md" />
-          <p className="mt-2 text-sm text-zinc-500">BikeCap - Handmade & Engineered for Bikes</p>
+          <img src={asset('logo-3d.png')} alt="GripCap" className="w-56 filter drop-shadow-md" />
+          <p className="mt-2 text-sm text-zinc-500">GripCap - Handmade & Engineered for Bikes</p>
           <div className="mt-5 flex gap-3">
             {[Instagram, Youtube, Facebook].map((Icon, i) => (
               <a key={i} href="#top" aria-label="Red social" className="border border-zinc-800 p-2 text-zinc-400 transition hover:border-racing hover:text-racing"><Icon size={18} /></a>
@@ -25,12 +25,12 @@ export default function Footer() {
         <div>
           <p className="section-tag mb-4">Contacto directo</p>
           <div className="space-y-3">
-            <a id="footer-whatsapp" href="https://wa.me/34600123456?text=Hola%20BikeCap" target="_blank" rel="noreferrer" className="btn-primary w-full"><MessageCircle size={16} /> WhatsApp +34 600 123 456</a>
-            <a href="mailto:hola@bikecap.es" className="btn-ghost w-full"><Mail size={16} /> hola@bikecap.es</a>
+            <a id="footer-whatsapp" href="https://wa.me/34600123456?text=Hola%20GripCap" target="_blank" rel="noreferrer" className="btn-primary w-full"><MessageCircle size={16} /> WhatsApp +34 600 123 456</a>
+            <a href="mailto:hola@gripcap.es" className="btn-ghost w-full"><Mail size={16} /> hola@gripcap.es</a>
           </div>
         </div>
       </div>
-      <div className="border-t border-zinc-900 py-5 text-center text-xs text-zinc-600">© {new Date().getFullYear()} BikeCap. Todos los derechos reservados.</div>
+      <div className="border-t border-zinc-900 py-5 text-center text-xs text-zinc-600">© {new Date().getFullYear()} GripCap. Todos los derechos reservados.</div>
     </footer>
   )
 }

@@ -20,7 +20,7 @@ export default function Hero() {
           <div className="relative mb-6 inline-block">
             <img
               src={asset('logo-3d.png')}
-              alt="BikeCap Logo"
+              alt="GripCap Logo"
               className="w-full max-w-md filter drop-shadow-[0_16px_32px_rgba(0,0,0,0.9)]"
             />
           </div>
@@ -71,7 +71,7 @@ export default function Hero() {
           <div className="absolute inset-12 overflow-hidden rounded-full border-4 border-ink-border shadow-[0_0_80px_rgba(255,98,25,0.35)]">
             <img
               src={asset('gallery/pair.jpg')}
-              alt="Par de tapones BikeCap con grabado láser"
+              alt="Par de tapones GripCap con grabado láser"
               className="h-full w-full object-cover"
             />
           </div>

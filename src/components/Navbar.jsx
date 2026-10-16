@@ -18,10 +18,10 @@ export default function Navbar({ cart, removeFromCart }) {
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-ink-border bg-ink-darker/90 backdrop-blur-xl">
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
-        <a href="#top" aria-label="BikeCap inicio" className="flex items-center gap-3">
+        <a href="#top" aria-label="GripCap inicio" className="flex items-center gap-3">
           <img
             src={asset('logo.png')}
-            alt="BikeCap"
+            alt="GripCap"
             className="h-8 w-auto mix-blend-screen transition hover:opacity-90 sm:h-9"
           />
         </a>
@@ -111,7 +111,7 @@ export default function Navbar({ cart, removeFromCart }) {
             >
               <div className="mb-6 flex items-center justify-between border-b border-ink-border pb-4">
                 <h2 className="font-display text-xl font-bold uppercase text-white">
-                  Tu carrito <span className="text-racing">BikeCap</span>
+                  Tu carrito <span className="text-racing">GripCap</span>
                 </h2>
                 <button onClick={() => setCartOpen(false)} aria-label="Cerrar" className="text-zinc-400 hover:text-white">
                   <X />

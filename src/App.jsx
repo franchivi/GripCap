@@ -15,7 +15,7 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden text-zinc-200">
-      {/* Fondo fotográfico BikeCap: ciclista en sendero montañoso */}
+      {/* Fondo fotográfico GripCap: ciclista en sendero montañoso */}
       <div
         className="pointer-events-none fixed inset-0 z-0 bg-cover bg-center bg-no-repeat"
         style={{

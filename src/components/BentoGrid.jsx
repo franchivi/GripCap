@@ -17,7 +17,7 @@ const cards = [
           <p className="mt-1 font-display text-lg font-bold text-red-400">Se fractura</p>
         </div>
         <div className="border border-racing/40 bg-racing/10 p-3">
-          <p className="text-zinc-400">TPU BikeCap</p>
+          <p className="text-zinc-400">TPU GripCap</p>
           <p className="mt-1 font-display text-lg font-bold text-racing">Absorbe y rebota</p>
         </div>
       </div>

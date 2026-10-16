@@ -179,7 +179,7 @@ export default function Simulator({ addToCart }) {
     <section id="simulador" className="relative mx-auto max-w-7xl scroll-mt-16 px-4 py-20 sm:px-6">
       <p className="section-tag">// 01 · Simulador en Vivo</p>
       <h2 className="section-title mt-2">
-        Configura tu <span className="bg-gradient-to-r from-racing to-anod bg-clip-text text-transparent">BikeCap</span>
+        Configura tu <span className="bg-gradient-to-r from-racing to-anod bg-clip-text text-transparent">GripCap</span>
       </h2>
       <p className="mt-3 max-w-2xl text-zinc-400">
         Personaliza los tapones con la paleta oficial (Titanio Gunmetal, Naranja Racing o Azul Eléctrico) y visualiza el grabado láser en tiempo real.
