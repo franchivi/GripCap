@@ -4,7 +4,7 @@ import { asset } from '../data'
 
 const stats = [
   { icon: Droplets, text: '100% Resistente a lavado a presión', color: 'text-anod' },
-  { icon: Flame, text: 'Grabado láser indestructible', color: 'text-racing' },
+  { icon: Flame, text: 'Grabado láser', color: 'text-racing' },
   { icon: Bike, text: 'Ajuste universal MTB / Gravel / Carretera', color: 'text-anod' },
 ]
 
@@ -28,7 +28,7 @@ export default function Hero() {
           <div>
             <span className="bevel-sm inline-flex items-center gap-2 border border-racing/40 bg-racing/10 px-4 py-2 font-display text-[11px] font-bold uppercase tracking-[0.25em] text-racing">
               <Sparkles size={13} className="text-racing" />
-              Ingeniería Aero & Personalización Láser
+              Tapones de Customizados premium
             </span>
           </div>
 
@@ -40,7 +40,7 @@ export default function Hero() {
           </h1>
 
           <p className="mt-6 max-w-xl text-base leading-relaxed text-zinc-300 sm:text-lg">
-            Tapones de manillar de ultra-rendimiento. Cuerpo amortiguador en TPU elástico impreso en 3D + chapa frontal de aluminio anodizado en tonos <span className="font-semibold text-racing">naranja racing</span> y <span className="font-semibold text-anod">azul eléctrico</span> grabada a láser de fibra.
+            Tapones de manillar de ultra-rendimiento. Cuerpo amortiguador en TPU elástico impreso en 3D + chapa frontal de aluminio anodizado  <span className="font-semibold text-racing"></span> y <span className="font-semibold text-anod"></span> grabadoa láser.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
