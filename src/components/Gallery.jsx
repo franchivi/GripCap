@@ -40,20 +40,6 @@ const mediaItems = [
     cls: 'col-span-2 md:col-span-2 row-span-2',
     label: 'Diseño Personalizado · Trotacerros MTB',
   },
-  {
-    type: 'image',
-    src: asset('gallery/taponesmarcasx.jpg'),
-    alt: 'Grabado láser GripCap de alta precisión',
-    cls: 'col-span-1 md:col-span-1 row-span-1',
-    label: 'Grabado Láser · Sello GripCap',
-  },
-  {
-    type: 'image',
-    src: asset('gallery/taponlogo.jpg'),
-    alt: 'Tapón GripCap con logotipo grabado',
-    cls: 'col-span-1 md:col-span-1 row-span-1',
-    label: 'Acabado Exterior · Resistencia extrema',
-  },
 ]
 
 export default function Gallery() {
