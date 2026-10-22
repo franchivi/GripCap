@@ -40,6 +40,13 @@ const mediaItems = [
     cls: 'col-span-2 md:col-span-2 row-span-2',
     label: 'Diseño Personalizado · Trotacerros MTB',
   },
+  {
+    type: 'image',
+    src: asset('gallery/caja-gripcap.jpg'),
+    alt: 'Presentación de par de tapones personalizados GripCap en su estuche',
+    cls: 'col-span-2 md:col-span-2 row-span-2',
+    label: 'Presentación GripCap · Tu par personalizado listo para montar',
+  },
 ]
 
 export default function Gallery() {
