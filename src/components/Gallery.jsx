@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Quote, Star, Play, X, Maximize2 } from 'lucide-react'
+import { Play, X, Maximize2 } from 'lucide-react'
 import { asset } from '../data'
 
 const mediaItems = [
   {
     type: 'video',
-    src: asset('gallery/video360tapon.mp4'),
+    src: asset('gallery/video360tapon_20261022231847.mp4'),
     poster: asset('gallery/tapon1.jpg'),
     alt: 'Vídeo 360º del tapón GripCap en aluminio anodizado y TPU',
     cls: 'col-span-2 row-span-2',
@@ -53,24 +53,6 @@ const mediaItems = [
     alt: 'Tapón GripCap con logotipo grabado',
     cls: 'col-span-1 md:col-span-1 row-span-1',
     label: 'Acabado Exterior · Resistencia extrema',
-  },
-]
-
-const reviews = [
-  {
-    name: 'Marcos Vidal',
-    role: 'Presidente · Peña Ciclista Los Calvos',
-    text: 'Encargamos tapones con nuestro escudo. Llevan meses de barro, caídas y lavados a presión y el grabado láser sigue impoluto.',
-  },
-  {
-    name: 'Laura Ortega',
-    role: 'Enduro & Downhill · Pirineos',
-    text: 'En la primera trialera di con una piedra en el extremo del manillar: el TPU absorbió el golpe en vez de rajarse como los de plástico rígido.',
-  },
-  {
-    name: 'Biciclas Norte',
-    role: 'Taller & Ciclismo · Bilbao',
-    text: 'La terminación del aluminio anodizado junto al grabado por láser tiene un nivel de detalle increíble y por 6 € el par es imbatible.',
   },
 ]
 
@@ -125,31 +107,6 @@ export default function Gallery() {
               <span className="text-racing">●</span> {item.label}
             </figcaption>
           </motion.figure>
-        ))}
-      </div>
-
-      <div className="mt-12 grid gap-4 md:grid-cols-3">
-        {reviews.map((r, i) => (
-          <motion.blockquote
-            key={r.name}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: i * 0.1 }}
-            className="tech-card p-6 border-ink-border hover:border-racing/50"
-          >
-            <Quote className="text-racing" size={22} />
-            <div className="mt-3 flex gap-0.5 text-racing">
-              {Array.from({ length: 5 }).map((_, k) => (
-                <Star key={k} size={14} fill="currentColor" />
-              ))}
-            </div>
-            <p className="mt-3 text-sm leading-relaxed text-zinc-300">“{r.text}”</p>
-            <footer className="mt-4 border-t border-ink-border pt-3">
-              <p className="font-display text-sm font-bold text-white">{r.name}</p>
-              <p className="text-xs text-zinc-400">{r.role}</p>
-            </footer>
-          </motion.blockquote>
         ))}
       </div>
 
