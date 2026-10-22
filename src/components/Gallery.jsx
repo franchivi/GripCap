@@ -6,7 +6,7 @@ import { asset } from '../data'
 const mediaItems = [
   {
     type: 'video',
-    src: asset('gallery/video360tapon_20261022231847.mp4'),
+    src: asset('gallery/1022.mp4'),
     poster: asset('gallery/tapon1.jpg'),
     alt: 'Vídeo 360º del tapón GripCap en aluminio anodizado y TPU',
     cls: 'col-span-2 row-span-2',
