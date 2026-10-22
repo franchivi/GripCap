@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion'
-import { Droplets, Flame, Bike, ArrowRight, Sparkles } from 'lucide-react'
-import { asset } from '../data'
+import { Droplets, Flame, Bike, ArrowRight, Sparkles, MessageCircle } from 'lucide-react'
+import { asset, BASE_PRICE, WHATSAPP_PHONE, eur } from '../data'
 
 const stats = [
   { icon: Droplets, text: '100% Resistente a lavado a presión', color: 'text-anod' },
-  { icon: Flame, text: 'Grabado láser', color: 'text-racing' },
+  { icon: Flame, text: 'Grabado láser sobre aluminio anodizado', color: 'text-racing' },
   { icon: Bike, text: 'Ajuste universal MTB / Gravel / Carretera', color: 'text-anod' },
 ]
 
@@ -25,10 +25,13 @@ export default function Hero() {
             />
           </div>
 
-          <div>
+          <div className="flex flex-wrap items-center gap-3">
             <span className="bevel-sm inline-flex items-center gap-2 border border-racing/40 bg-racing/10 px-4 py-2 font-display text-[11px] font-bold uppercase tracking-[0.25em] text-racing">
               <Sparkles size={13} className="text-racing" />
-              Tapones  Customizados premium
+              Tapones Customizados Premium
+            </span>
+            <span className="bevel-sm inline-flex items-center gap-1.5 bg-racing px-3.5 py-2 font-display text-xs font-black uppercase tracking-wider text-black shadow-[0_0_20px_rgba(255,98,25,0.45)]">
+              ¡Solo {eur(BASE_PRICE)} el par!
             </span>
           </div>
 
@@ -40,17 +43,25 @@ export default function Hero() {
           </h1>
 
           <p className="mt-6 max-w-xl text-base leading-relaxed text-zinc-300 sm:text-lg">
-            Tapones de manillar de ultra-rendimiento. Cuerpo amortiguador en TPU elástico impreso en 3D + chapa frontal de aluminio anodizado grabado a láser.
+            Tapones de manillar de ultra-rendimiento. Cuerpo amortiguador en TPU elástico impreso en 3D + chapa frontal de aluminio anodizado grabado a láser por solo <strong className="text-white">{eur(BASE_PRICE)} el par</strong>.
           </p>
 
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a id="hero-cta-sim" href="#simulador" className="btn-primary">
-              Diseñar mis tapones <ArrowRight size={16} />
+              Diseñar mis tapones ({eur(BASE_PRICE)}/par) <ArrowRight size={16} />
+            </a>
+            <a
+              href={`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent('Hola GripCap, quiero personalizar mis tapones de manillar')}`}
+              target="_blank"
+              rel="noreferrer"
+              className="btn-ghost"
+            >
+              <MessageCircle size={16} className="text-[#25D366]" /> Consultar por WhatsApp
             </a>
           </div>
         </motion.div>
 
-        {/* Visual interactivo con orbes de color del logo */}
+        {/* Visual interactivo con vídeo 360º real del tapón GripCap */}
         <motion.div
           initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -68,16 +79,20 @@ export default function Hero() {
             transition={{ duration: 50, repeat: Infinity, ease: 'linear' }}
             className="absolute inset-6 rounded-full border border-anod/40"
           />
-          <div className="absolute inset-12 overflow-hidden rounded-full border-4 border-ink-border shadow-[0_0_80px_rgba(255,98,25,0.35)]">
-            <img
-              src={asset('gallery/trotacerros.jpg')}
-              alt="Tapón GripCap Trotacerros MTB con grabado láser"
+          <div className="absolute inset-10 overflow-hidden rounded-full border-4 border-ink-border bg-black shadow-[0_0_80px_rgba(255,98,25,0.35)]">
+            <video
+              src={asset('gallery/video360tapon.mp4')}
+              poster={asset('gallery/tapon1.jpg')}
+              autoPlay
+              loop
+              muted
+              playsInline
               className="h-full w-full object-cover"
             />
           </div>
 
-          <div className="bevel-sm absolute -right-2 bottom-10 border border-ink-border bg-ink-surface/90 px-4 py-2 font-display text-xs backdrop-blur shadow-lg">
-            <span className="text-racing font-bold">●</span> Ø 19–22 mm <span className="text-anod font-bold">MTB/Gravel/Road</span>
+          <div className="bevel-sm absolute -right-2 bottom-8 border border-ink-border bg-ink-surface/90 px-4 py-2 font-display text-xs backdrop-blur shadow-lg">
+            <span className="text-racing font-bold">●</span> Vista 360º Real · <span className="text-anod font-bold">{eur(BASE_PRICE)} / par</span>
           </div>
         </motion.div>
       </div>

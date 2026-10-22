@@ -1,89 +1,132 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Upload, ShoppingCart, Check, Trash2, Minus, Plus, Type, ZoomIn, RotateCcw } from 'lucide-react'
-import { COLORS, FONTS, GRIPS, LOGO_FEE, BASE_PRICE, discountFor, unitPrice, eur } from '../data'
+import {
+  Upload,
+  ShoppingCart,
+  Check,
+  Trash2,
+  Minus,
+  Plus,
+  Type,
+  ZoomIn,
+  RotateCcw,
+  MessageCircle,
+  Download,
+  X,
+} from 'lucide-react'
+import { COLORS, FONTS, BASE_PRICE, WHATSAPP_DISPLAY, eur } from '../data'
+import { renderPlugToDataUrl, sendOrderToWhatsApp } from '../utils/orderWhatsapp'
 
-function CapPreview({ color, grip, text, font, scale, logo, logoScale, silhouette, mode }) {
+/**
+ * Vista frontal fiel al tapón real GripCap:
+ * - Cuerpo exterior de TPU negro impreso en 3D con sus 3 muescas perimetrales a 120° y estrías concéntricas
+ * - Ranura interior de asiento
+ * - Chapa central de aluminio anodizado con cepillado lineal horizontal
+ * - Aro fino plateado grabado a láser junto al borde exterior del aluminio
+ * - Grabado central (texto o logotipo sin filtro blanco roto)
+ */
+function CapPreview({ color, text, font, scale, logo, logoScale, mode }) {
+  // 3 muescas perimetrales del cuerpo TPU a 120° como en el tapón real GripCap
+  const notches = [-145, -25, 95]
+
   return (
-    <div className="relative mx-auto aspect-square w-full max-w-[460px]" style={{ containerType: 'inline-size' }}>
-      {/* Contorno del puño / manillar con iluminación según el color seleccionado */}
+    <div
+      className="relative mx-auto aspect-square w-full max-w-[440px] select-none"
+      style={{ containerType: 'inline-size' }}
+    >
+      {/* Sombra ambiental y resplandor técnico */}
       <div
-        className="absolute inset-0 rounded-full transition-all duration-500"
+        className="absolute inset-[4%] rounded-full transition-all duration-500"
         style={{
-          background: `radial-gradient(circle at 35% 30%, ${grip.ring}, #0B0C0E 75%)`,
-          boxShadow: `0 30px 80px rgba(0,0,0,.8), 0 0 40px ${color.hex}22, inset 0 0 0 2px #18191E`,
+          boxShadow: `0 30px 70px rgba(0,0,0,.9), 0 0 45px ${color.hex}25`,
         }}
-      >
-        {/* textura espuma */}
-        <div
-          className="absolute inset-0 rounded-full opacity-25"
-          style={{ backgroundImage: 'repeating-radial-gradient(circle, transparent 0 6px, rgba(255,255,255,.05) 6px 7px)' }}
-        />
-      </div>
+      />
 
-      {/* Cuerpo TPU amortiguador impreso en 3D */}
+      {/* 1. Cuerpo exterior TPU impreso en 3D con sus 3 muescas perimetrales */}
       <div
-        className="absolute rounded-full"
+        className="absolute inset-[4%] overflow-hidden rounded-full border-2 border-[#2A2E37]"
         style={{
-          inset: '9%',
-          background: 'radial-gradient(circle at 30% 25%, #353943, #0D0E12 80%)',
-          boxShadow: 'inset 0 4px 14px rgba(255,255,255,.12), inset 0 -8px 24px rgba(0,0,0,.95), 0 0 0 3px #121316',
+          background: 'linear-gradient(145deg, #2E323C 0%, #17191E 48%, #0B0C0F 100%)',
+          boxShadow:
+            'inset 0 3px 10px rgba(255,255,255,.14), inset 0 -10px 24px rgba(0,0,0,.95)',
         }}
       >
-        {/* Estrías de impresión 3D aditiva */}
+        {/* Líneas concéntricas escalonadas del bisel impreso en 3D */}
         <div
-          className="absolute rounded-full"
+          className="absolute inset-0 rounded-full opacity-55"
           style={{
-            inset: '3%',
-            backgroundImage: 'repeating-conic-gradient(rgba(255,255,255,.06) 0 3deg, transparent 3deg 6deg)',
-            mask: 'radial-gradient(circle, transparent 80%, #000 81%)',
-            WebkitMask: 'radial-gradient(circle, transparent 80%, #000 81%)',
+            backgroundImage:
+              'repeating-radial-gradient(circle at center, rgba(255,255,255,0.07) 0px, rgba(255,255,255,0.07) 1.5px, rgba(0,0,0,0.6) 1.5px, rgba(0,0,0,0.6) 4.5px)',
           }}
         />
+
+        {/* Las 3 muescas semicirculares del borde TPU (idénticas al tapón real GripCap) */}
+        {notches.map((deg) => (
+          <div
+            key={deg}
+            className="pointer-events-none absolute inset-0"
+            style={{ transform: `rotate(${deg}deg)` }}
+          >
+            <div
+              className="absolute left-1/2 -top-[4.2%] h-[9.5%] w-[11%] -translate-x-1/2 rounded-full border-2 border-[#262A33] bg-[#0B0C0F]"
+              style={{
+                boxShadow: 'inset 0 -3px 6px rgba(255,255,255,0.08), 0 2px 8px rgba(0,0,0,0.9)',
+              }}
+            />
+          </div>
+        ))}
       </div>
 
-      {/* Disco superior de aluminio anodizado con biselado técnico */}
+      {/* 2. Ranura / canal de encaje entre el labio de TPU y la chapa de aluminio */}
+      <div
+        className="absolute inset-[13.5%] rounded-full border border-[#252932] bg-[#07080A]"
+        style={{
+          boxShadow: 'inset 0 4px 12px rgba(0,0,0,.95), 0 1px 2px rgba(255,255,255,.08)',
+        }}
+      />
+
+      {/* 3. Chapa frontal de aluminio anodizado con cepillado horizontal y aro plateado */}
       <motion.div
         key={color.id}
-        initial={{ opacity: 0.5, scale: 0.95 }}
+        initial={{ opacity: 0.75, scale: 0.98 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.3 }}
-        className="absolute overflow-hidden rounded-full"
+        transition={{ duration: 0.25 }}
+        className="absolute inset-[15.5%] overflow-hidden rounded-full"
         style={{
-          inset: '17%',
           background: color.gradient,
-          boxShadow: `inset 0 0 0 3px rgba(255,255,255,.22), inset 0 0 30px rgba(0,0,0,.6), 0 8px 25px rgba(0,0,0,.7)`,
+          boxShadow:
+            'inset 0 0 0 1.5px rgba(255,255,255,.18), inset 0 0 26px rgba(0,0,0,.65), 0 6px 20px rgba(0,0,0,.75)',
         }}
       >
-        {/* Micro-textura cepillado radial */}
+        {/* Textura de aluminio cepillado horizontal (idéntica al tapón real) */}
         <div
-          className="absolute inset-0 opacity-40 mix-blend-overlay"
-          style={{ backgroundImage: 'repeating-radial-gradient(circle, rgba(255,255,255,.35) 0 1px, rgba(0,0,0,.25) 1px 2px)' }}
-        />
-        {/* Reflejo biselado automoción */}
-        <div
-          className="absolute inset-0"
+          className="pointer-events-none absolute inset-0 opacity-45 mix-blend-overlay"
           style={{
-            background: 'linear-gradient(135deg, rgba(255,255,255,.32) 0%, transparent 40%, transparent 65%, rgba(0,0,0,.35) 100%)',
+            backgroundImage:
+              'repeating-linear-gradient(180deg, rgba(255,255,255,0.22) 0px, rgba(255,255,255,0.22) 1px, rgba(0,0,0,0.28) 1px, rgba(0,0,0,0.28) 2.5px)',
           }}
         />
 
-        {/* Grabado láser */}
-        <div className="absolute inset-0 flex items-center justify-center">
+        {/* Reflejo metálico diagonal de estudio */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(135deg, rgba(255,255,255,.24) 0%, rgba(255,255,255,.03) 38%, transparent 60%, rgba(0,0,0,.38) 100%)',
+          }}
+        />
+
+        {/* Grabado central (Texto o Logotipo subido tal cual, sin ponerlo blanco) */}
+        <div className="absolute inset-[6%] flex items-center justify-center overflow-hidden rounded-full">
           {mode === 'logo' && logo ? (
             <img
               src={logo}
-              alt="Logotipo grabado por láser"
+              alt="Logotipo personalizado en tapón GripCap"
               draggable={false}
               style={{
-                width: `${logoScale * 55}%`,
-                height: `${logoScale * 55}%`,
+                width: `${logoScale * 74}%`,
+                height: `${logoScale * 74}%`,
                 objectFit: 'contain',
-                filter: silhouette
-                  ? 'brightness(0) invert(1) drop-shadow(0 0 2px rgba(255,255,255,.7))'
-                  : 'none',
-                opacity: 0.95,
-                mixBlendMode: silhouette ? 'screen' : 'normal',
               }}
             />
           ) : (
@@ -93,53 +136,65 @@ function CapPreview({ color, grip, text, font, scale, logo, logoScale, silhouett
                 fontWeight: font.weight,
                 fontSize: `${scale * 17}cqw`,
                 lineHeight: 1,
-                color: '#F4F6F8',
+                color: '#E8ECF2',
                 letterSpacing: '0.03em',
                 textTransform: 'uppercase',
                 whiteSpace: 'nowrap',
-                textShadow: '0 0 1px #fff, 0 1px 0 rgba(0,0,0,.4), 0 0 10px rgba(255,255,255,.3)',
-                opacity: 0.95,
+                textShadow:
+                  '0 1px 0 rgba(255,255,255,.45), 0 2px 6px rgba(0,0,0,.65)',
               }}
             >
               {text || '—'}
             </span>
           )}
         </div>
-      </motion.div>
 
-      {/* Pequeño detalle de mecanizado técnico */}
-      <div className="absolute left-1/2 top-[3%] h-[3%] w-[10%] -translate-x-1/2 rounded-sm bg-black/60" />
+        {/* Aro fino plateado grabado a láser junto al borde del aluminio (sello del tapón GripCap) */}
+        <div
+          className="pointer-events-none absolute inset-[4.2%] rounded-full"
+          style={{
+            border: '2.5px solid rgba(228, 234, 242, 0.85)',
+            boxShadow: '0 0 4px rgba(0,0,0,0.5), inset 0 0 4px rgba(0,0,0,0.45)',
+          }}
+        />
+      </motion.div>
     </div>
   )
 }
 
-export default function Simulator({ addToCart }) {
+export default function Simulator({ cart, addToCart }) {
   const [color, setColor] = useState(COLORS[0])
-  const [grip, setGrip] = useState(GRIPS[0])
   const [mode, setMode] = useState('text')
-  const [text, setText] = useState('42')
+  const [text, setText] = useState('GRIPCAP')
   const [font, setFont] = useState(FONTS[0])
-  const [scale, setScale] = useState(1)
+  const [scale, setScale] = useState(0.75)
   const [logo, setLogo] = useState(null)
   const [logoName, setLogoName] = useState('')
   const [logoScale, setLogoScale] = useState(1)
-  const [silhouette, setSilhouette] = useState(true)
   const [pairs, setPairs] = useState(1)
   const [toast, setToast] = useState(false)
+  const [orderModal, setOrderModal] = useState(null)
+  const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const fileRef = useRef(null)
-
-  useEffect(() => () => logo && URL.revokeObjectURL(logo), [logo])
 
   const onFile = (e) => {
     const f = e.target.files?.[0]
     if (!f) return
-    if (!/^image\/(svg\+xml|png|jpeg|webp)$/.test(f.type)) return setError('Formato no válido. Usa SVG o PNG.')
-    if (f.size > 5 * 1024 * 1024) return setError('Archivo demasiado grande (máx. 5 MB).')
+    if (!/^image\/(svg\+xml|png|jpeg|jpg|webp)$/.test(f.type)) {
+      return setError('Formato no válido. Usa PNG, JPG, WEBP o SVG.')
+    }
+    if (f.size > 8 * 1024 * 1024) {
+      return setError('Archivo demasiado grande (máx. 8 MB).')
+    }
     setError('')
-    setLogo(URL.createObjectURL(f))
-    setLogoName(f.name)
-    setMode('logo')
+    const reader = new FileReader()
+    reader.onload = () => {
+      setLogo(reader.result)
+      setLogoName(f.name)
+      setMode('logo')
+    }
+    reader.readAsDataURL(f)
   }
 
   const clearLogo = () => {
@@ -150,25 +205,82 @@ export default function Simulator({ addToCart }) {
   }
 
   const hasLogo = mode === 'logo' && logo
-  const extra = hasLogo ? LOGO_FEE : 0
-  const disc = discountFor(pairs)
-  const unit = unitPrice(pairs, extra)
+  const unit = BASE_PRICE
   const total = unit * pairs
   const description = useMemo(
-    () => `${color.name} · ${hasLogo ? `Logo ${logoName}` : `Texto "${(text || '').toUpperCase()}" (${font.name})`}`,
+    () =>
+      `${color.name} · ${
+        hasLogo ? `Logo ${logoName}` : `Texto "${(text || '').toUpperCase()}" (${font.name})`
+      }`,
     [color, hasLogo, logoName, text, font]
   )
 
-  const save = () => {
-    addToCart({ id: Date.now(), summary: description, pairs, total, gradient: color.gradient })
-    setToast(true)
-    setTimeout(() => setToast(false), 2500)
+  const buildCurrentItem = async () => {
+    const previewDataUrl = await renderPlugToDataUrl({
+      color,
+      mode: hasLogo ? 'logo' : 'text',
+      text,
+      font,
+      scale,
+      logoDataUrl: hasLogo ? logo : null,
+      logoScale,
+    })
+
+    return {
+      id: Date.now(),
+      colorId: color.id,
+      colorName: color.name,
+      mode: hasLogo ? 'logo' : 'text',
+      text: (text || '').toUpperCase(),
+      fontName: font.name,
+      scale,
+      logoName: hasLogo ? logoName : '',
+      logoDataUrl: hasLogo ? logo : null,
+      previewDataUrl,
+      summary: description,
+      pairs,
+      unitPrice: unit,
+      total,
+      gradient: color.gradient,
+    }
+  }
+
+  const save = async () => {
+    if (saving) return
+    setSaving(true)
+    try {
+      const item = await buildCurrentItem()
+      addToCart(item)
+      setToast(true)
+      setTimeout(() => setToast(false), 3000)
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  const handleOrderNow = async () => {
+    if (saving) return
+    setSaving(true)
+    try {
+      let itemsToOrder = cart
+      if (!itemsToOrder || itemsToOrder.length === 0) {
+        const currentItem = await buildCurrentItem()
+        addToCart(currentItem)
+        itemsToOrder = [currentItem]
+      }
+      const res = await sendOrderToWhatsApp(itemsToOrder)
+      if (res) {
+        setOrderModal(res)
+      }
+    } finally {
+      setSaving(false)
+    }
   }
 
   const reset = () => {
     setColor(COLORS[0])
-    setText('42')
-    setScale(1)
+    setText('GRIPCAP')
+    setScale(0.75)
     setLogoScale(1)
     setFont(FONTS[0])
     setMode('text')
@@ -182,45 +294,37 @@ export default function Simulator({ addToCart }) {
         Configura tu <span className="bg-gradient-to-r from-racing to-anod bg-clip-text text-transparent">GripCap</span>
       </h2>
       <p className="mt-3 max-w-2xl text-zinc-400">
-        Personaliza los tapones con la paleta oficial (Titanio Gunmetal, Naranja Racing o Azul Eléctrico) y visualiza el grabado láser en tiempo real.
+        Personaliza nuestro tapón de TPU + aluminio anodizado con tu texto, dorsal o logotipo por solo{' '}
+        <span className="font-bold text-racing">{eur(BASE_PRICE)} el par</span>. Guarda tus diseños en el carrito y haz tu pedido directo por WhatsApp.
       </p>
 
       <div className="mt-10 grid gap-6 lg:grid-cols-[1.1fr_1fr]">
         {/* Preview Container */}
         <div
-          className="tech-card flex flex-col justify-center p-6 sm:p-10 border-ink-border"
+          className="tech-card flex flex-col justify-between p-6 sm:p-10 border-ink-border"
           style={{
-            backgroundImage: `radial-gradient(circle at 50% 40%, ${color.hex}25, transparent 65%)`,
+            backgroundImage: `radial-gradient(circle at 50% 45%, ${color.hex}28, transparent 68%)`,
           }}
         >
-          <div className="mb-4 flex items-center justify-between font-display text-[11px] uppercase tracking-widest text-zinc-500">
-            <span>Vista frontal · Manillar Ø 22 mm</span>
+          <div className="mb-4 flex items-center justify-between font-display text-[11px] uppercase tracking-widest text-zinc-400">
+            <span>Vista frontal real · Tapón GripCap Ø 19–22 mm</span>
             <span className="flex items-center gap-1.5 font-bold text-anod">
               <span className="h-2 w-2 rounded-full bg-anod animate-pulse" /> LIVE LASER
             </span>
           </div>
 
-          <CapPreview {...{ color, grip, text, font, scale, logo, logoScale, silhouette, mode }} />
-
-          <div className="mt-6 flex justify-center gap-2">
-            {GRIPS.map((g) => (
-              <button
-                key={g.id}
-                onClick={() => setGrip(g)}
-                className={`border px-3 py-1.5 font-display text-[11px] uppercase tracking-wider transition ${
-                  grip.id === g.id
-                    ? 'border-racing bg-racing/10 text-racing'
-                    : 'border-ink-border text-zinc-500 hover:text-zinc-300'
-                }`}
-              >
-                {g.name}
-              </button>
-            ))}
+          <div className="my-auto py-4">
+            <CapPreview {...{ color, text, font, scale, logo, logoScale, mode }} />
           </div>
+
+          <p className="mt-4 text-center font-display text-xs uppercase tracking-wider text-zinc-400">
+            Cuerpo TPU 3D con 3 muescas · Chapa de aluminio anodizado cepillado ·{' '}
+            <span className="font-bold text-racing">{eur(BASE_PRICE)} / par</span>
+          </p>
         </div>
 
         {/* Controles de personalización */}
-        <div className="tech-card space-y-7 p-6 sm:p-8">
+        <div className="tech-card space-y-6 p-6 sm:p-8">
           {/* Selector de color */}
           <div>
             <label className="mb-3 block font-display text-xs font-bold uppercase tracking-widest text-zinc-400">
@@ -252,7 +356,7 @@ export default function Simulator({ addToCart }) {
             <div className="grid grid-cols-2 gap-px bg-ink-border p-px bevel-sm overflow-hidden">
               {[
                 ['text', 'Texto / Dorsal', Type],
-                ['logo', 'Logotipo Escudo', Upload],
+                ['logo', 'Logotipo / Imagen', Upload],
               ].map(([id, label, Icon]) => (
                 <button
                   key={id}
@@ -269,11 +373,17 @@ export default function Simulator({ addToCart }) {
 
           <AnimatePresence mode="wait">
             {mode === 'text' ? (
-              <motion.div key="t" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="space-y-4">
+              <motion.div
+                key="t"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="space-y-4"
+              >
                 <input
                   id="sim-text"
                   className="input font-display text-lg uppercase tracking-wider font-bold"
-                  maxLength={8}
+                  maxLength={10}
                   value={text}
                   onChange={(e) => setText(e.target.value)}
                   placeholder="DORSAL / NOMBRE"
@@ -294,31 +404,45 @@ export default function Simulator({ addToCart }) {
                     </button>
                   ))}
                 </div>
-                <Range icon={ZoomIn} label="Tamaño del texto" value={scale} min={0.4} max={1.6} onChange={setScale} />
+                <Range
+                  icon={ZoomIn}
+                  label="Tamaño del texto"
+                  value={scale}
+                  min={0.4}
+                  max={1.6}
+                  onChange={setScale}
+                />
               </motion.div>
             ) : (
-              <motion.div key="l" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} className="space-y-4">
+              <motion.div
+                key="l"
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="space-y-4"
+              >
                 <button
                   id="sim-upload"
                   onClick={() => fileRef.current?.click()}
                   className="flex w-full items-center justify-center gap-2 border border-dashed border-anod/60 bg-anod/10 py-4 font-display text-xs font-bold uppercase tracking-wider text-anod transition hover:bg-anod/20"
                 >
-                  <Upload size={16} /> {logoName || 'Subir logotipo del club (SVG / PNG)'}
+                  <Upload size={16} /> {logoName || 'Subir logotipo o imagen (PNG / JPG / SVG)'}
                 </button>
                 {logo && (
                   <>
-                    <Range icon={ZoomIn} label="Escala del logotipo" value={logoScale} min={0.4} max={1.5} onChange={setLogoScale} />
-                    <label className="flex cursor-pointer items-center gap-3 text-sm text-zinc-300">
-                      <input
-                        type="checkbox"
-                        checked={silhouette}
-                        onChange={(e) => setSilhouette(e.target.checked)}
-                        className="accent-racing h-4 w-4"
-                      />
-                      Simular grabado láser (silueta aluminio expuesto)
-                    </label>
-                    <button onClick={clearLogo} className="flex items-center gap-2 text-xs text-zinc-500 hover:text-racing">
-                      <Trash2 size={14} /> Quitar logotipo
+                    <Range
+                      icon={ZoomIn}
+                      label="Escala de la imagen"
+                      value={logoScale}
+                      min={0.3}
+                      max={1.6}
+                      onChange={setLogoScale}
+                    />
+                    <button
+                      onClick={clearLogo}
+                      className="flex items-center gap-2 text-xs text-zinc-400 hover:text-racing transition"
+                    >
+                      <Trash2 size={14} /> Quitar imagen
                     </button>
                   </>
                 )}
@@ -326,7 +450,13 @@ export default function Simulator({ addToCart }) {
               </motion.div>
             )}
           </AnimatePresence>
-          <input ref={fileRef} type="file" accept=".svg,.png,image/svg+xml,image/png" className="hidden" onChange={onFile} />
+          <input
+            ref={fileRef}
+            type="file"
+            accept=".svg,.png,.jpg,.jpeg,.webp,image/svg+xml,image/png,image/jpeg,image/webp"
+            className="hidden"
+            onChange={onFile}
+          />
 
           {/* Cantidad de pares */}
           <div>
@@ -350,11 +480,7 @@ export default function Simulator({ addToCart }) {
                 <Plus size={16} />
               </button>
               <span className="text-xs text-zinc-400">
-                {disc > 0 ? (
-                  <span className="font-bold text-racing">-{Math.round(disc * 100)}% descuento aplicado</span>
-                ) : (
-                  'Tarifa unitaria base'
-                )}
+                Precio único: <strong className="text-racing">{eur(BASE_PRICE)} / par</strong>
               </span>
             </div>
           </div>
@@ -365,11 +491,8 @@ export default function Simulator({ addToCart }) {
               Resumen de configuración
             </p>
             <dl className="space-y-1.5 text-zinc-400">
-              <Row k="Acabado" v={description} />
-              <Row k="Base (par)" v={eur(BASE_PRICE)} />
-              {hasLogo && <Row k="Grabado de escudo" v={`+${eur(LOGO_FEE)}`} />}
-              {disc > 0 && <Row k="Descuento volumen" v={`-${Math.round(disc * 100)}%`} accent />}
-              <Row k="Precio / par" v={eur(unit)} />
+              <Row k="Diseño" v={description} />
+              <Row k="Precio por par" v={eur(BASE_PRICE)} accent />
             </dl>
             <div className="mt-3 flex items-end justify-between border-t border-ink-border pt-3">
               <span className="font-display text-xs uppercase text-zinc-500">
@@ -386,14 +509,22 @@ export default function Simulator({ addToCart }) {
             </div>
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex flex-col gap-3 sm:flex-row">
             <button
               id="sim-add"
               onClick={save}
               className="btn-primary flex-1"
-              disabled={mode === 'text' && !text.trim()}
+              disabled={(mode === 'text' && !text.trim()) || saving}
             >
               <ShoppingCart size={16} /> Guardar diseño / Añadir al carrito
+            </button>
+            <button
+              id="sim-order-wa"
+              onClick={handleOrderNow}
+              disabled={(mode === 'text' && !text.trim() && (!cart || cart.length === 0)) || saving}
+              className="bevel-sm inline-flex items-center justify-center gap-2 bg-[#25D366] px-5 py-3.5 font-display text-xs font-bold uppercase tracking-wider text-black transition hover:bg-[#1ebe5d]"
+            >
+              <MessageCircle size={16} /> Pedir Ahora
             </button>
             <button aria-label="Reiniciar" onClick={reset} className="btn-ghost !px-4" title="Restablecer">
               <RotateCcw size={16} />
@@ -408,10 +539,85 @@ export default function Simulator({ addToCart }) {
             initial={{ y: 60, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 60, opacity: 0 }}
-            className="fixed bottom-6 left-1/2 z-[70] flex -translate-x-1/2 items-center gap-2 border border-racing bg-ink-darker px-5 py-3 font-display text-sm font-bold uppercase text-white shadow-[0_0_35px_rgba(255,98,25,.5)]"
+            className="fixed bottom-6 left-1/2 z-[70] flex -translate-x-1/2 items-center gap-3 border border-racing bg-ink-darker px-5 py-3 font-display text-sm font-bold uppercase text-white shadow-[0_0_35px_rgba(255,98,25,.5)]"
           >
-            <Check size={16} className="text-racing" /> Diseño guardado en tu carrito
+            <Check size={16} className="text-racing" /> Diseño e imagen guardados en tu carrito
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Modal de confirmación de envío de imagen y diseño a WhatsApp */}
+      <AnimatePresence>
+        {orderModal && (
+          <>
+            <motion.div
+              className="fixed inset-0 z-[80] bg-black/80 backdrop-blur-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setOrderModal(null)}
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.92 }}
+              className="fixed left-1/2 top-1/2 z-[90] w-[92%] max-w-lg -translate-x-1/2 -translate-y-1/2 border border-ink-border bg-ink-surface p-6 shadow-2xl"
+            >
+              <div className="flex items-center justify-between border-b border-ink-border pb-3">
+                <h3 className="font-display text-lg font-bold uppercase text-white">
+                  Pedido enviado a <span className="text-[#25D366]">WhatsApp ({WHATSAPP_DISPLAY})</span>
+                </h3>
+                <button
+                  onClick={() => setOrderModal(null)}
+                  className="text-zinc-400 hover:text-white"
+                  aria-label="Cerrar"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              <div className="mt-4 space-y-3 text-sm text-zinc-300">
+                <p>
+                  Se ha abierto el chat de WhatsApp con el número{' '}
+                  <strong className="text-white">{WHATSAPP_DISPLAY}</strong> con los detalles de tu diseño y hemos generado la imagen de tu pedido:
+                </p>
+                {orderModal.sheetDataUrl && (
+                  <div className="overflow-hidden border border-ink-border bg-ink-darker p-2">
+                    <img
+                      src={orderModal.sheetDataUrl}
+                      alt="Resumen gráfico del diseño GripCap"
+                      className="max-h-56 w-full object-contain"
+                    />
+                  </div>
+                )}
+                <p className="rounded border border-[#25D366]/40 bg-[#25D366]/10 p-3 text-xs text-zinc-200">
+                  {orderModal.copiedToClipboard
+                    ? '✅ La imagen de tu diseño se ha copiado al portapapeles y descargado: solo pulsa Pegar (Ctrl+V) o adjúntala en el chat de WhatsApp.'
+                    : '✅ La imagen de tu diseño se ha descargado en tu dispositivo: adjúntala directamente en la conversación de WhatsApp.'}
+                </p>
+              </div>
+
+              <div className="mt-5 flex flex-col gap-2 sm:flex-row">
+                {orderModal.sheetDataUrl && (
+                  <a
+                    href={orderModal.sheetDataUrl}
+                    download="diseno-gripcap.png"
+                    className="btn-ghost flex-1 text-center"
+                  >
+                    <Download size={15} /> Descargar imagen
+                  </a>
+                )}
+                <a
+                  href={orderModal.waUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="bevel-sm inline-flex flex-1 items-center justify-center gap-2 bg-[#25D366] px-4 py-3 font-display text-xs font-bold uppercase tracking-wider text-black hover:bg-[#1ebe5d]"
+                >
+                  <MessageCircle size={16} /> Abrir WhatsApp ({WHATSAPP_DISPLAY})
+                </a>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </section>
@@ -422,7 +628,9 @@ function Range({ icon: Icon, label, value, min, max, onChange }) {
   return (
     <div>
       <div className="mb-1 flex items-center justify-between text-xs text-zinc-400">
-        <span className="flex items-center gap-1.5"><Icon size={14} /> {label}</span>
+        <span className="flex items-center gap-1.5">
+          <Icon size={14} /> {label}
+        </span>
         <span className="font-mono text-zinc-300">{Math.round(value * 100)}%</span>
       </div>
       <input

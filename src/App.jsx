@@ -1,15 +1,33 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { MessageCircle } from 'lucide-react'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Simulator from './components/Simulator'
 import BentoGrid from './components/BentoGrid'
-import B2BSection from './components/B2BSection'
 import Gallery from './components/Gallery'
 import Footer from './components/Footer'
-import { asset } from './data'
+import { asset, WHATSAPP_PHONE, WHATSAPP_DISPLAY } from './data'
+
+const STORAGE_KEY = 'gripcap_saved_cart_v1'
 
 export default function App() {
-  const [cart, setCart] = useState([])
+  const [cart, setCart] = useState(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY)
+      return saved ? JSON.parse(saved) : []
+    } catch {
+      return []
+    }
+  })
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(cart))
+    } catch {
+      // Si localStorage supera cuota con muchas imágenes, mantener en memoria
+    }
+  }, [cart])
+
   const addToCart = (item) => setCart((c) => [...c, item])
   const removeFromCart = (id) => setCart((c) => c.filter((i) => i.id !== id))
 
@@ -31,13 +49,26 @@ export default function App() {
         <Navbar cart={cart} removeFromCart={removeFromCart} />
         <main>
           <Hero />
-          <Simulator addToCart={addToCart} />
+          <Simulator cart={cart} addToCart={addToCart} />
           <BentoGrid />
-          <B2BSection />
           <Gallery />
         </main>
         <Footer />
       </div>
+
+      {/* Botón flotante de WhatsApp vinculado al 653418174 */}
+      <a
+        id="floating-whatsapp"
+        href={`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent('Hola GripCap, quiero información o hacer un pedido de tapones personalizados')}`}
+        target="_blank"
+        rel="noreferrer"
+        aria-label={`Contactar por WhatsApp al ${WHATSAPP_DISPLAY}`}
+        title={`WhatsApp ${WHATSAPP_DISPLAY}`}
+        className="group fixed bottom-6 right-6 z-50 flex items-center gap-2.5 rounded-full border border-[#25D366]/60 bg-[#25D366] px-4 py-3.5 font-display text-xs font-black uppercase tracking-wider text-black shadow-[0_0_30px_rgba(37,211,102,0.55)] transition-all duration-300 hover:scale-105 hover:bg-[#20bd5a]"
+      >
+        <MessageCircle size={22} className="fill-black text-[#25D366]" />
+        <span className="hidden sm:inline">WhatsApp · {WHATSAPP_DISPLAY}</span>
+      </a>
     </div>
   )
 }
