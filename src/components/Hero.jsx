@@ -80,19 +80,11 @@ export default function Hero() {
             className="absolute inset-6 rounded-full border border-anod/40"
           />
           <div className="absolute inset-10 overflow-hidden rounded-full border-4 border-ink-border bg-black shadow-[0_0_80px_rgba(255,98,25,0.35)]">
-            <video
-              src={asset('gallery/video360tapon.mp4')}
-              poster={asset('gallery/tapon1.jpg')}
-              autoPlay
-              loop
-              muted
-              playsInline
+            <img
+              src={asset('gallery/tapon1.jpg')}
+              alt="Tapón GripCap Trotacerros MTB con grabado láser"
               className="h-full w-full object-cover"
             />
-          </div>
-
-          <div className="bevel-sm absolute -right-2 bottom-8 border border-ink-border bg-ink-surface/90 px-4 py-2 font-display text-xs backdrop-blur shadow-lg">
-            <span className="text-racing font-bold">●</span> Vista 360º Real · <span className="text-anod font-bold">{eur(BASE_PRICE)} / par</span>
           </div>
         </motion.div>
       </div>
