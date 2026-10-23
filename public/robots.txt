@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Bloquea el rastreo de rutas técnicas sin contenido
+Disallow: /assets/
+
+Sitemap: https://www.gripcap.es/sitemap.xml

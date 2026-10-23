@@ -6,11 +6,13 @@ import Simulator from './components/Simulator'
 import BentoGrid from './components/BentoGrid'
 import Gallery from './components/Gallery'
 import Footer from './components/Footer'
+import CookieBanner from './components/CookieBanner'
+import LegalLayout, { currentRoute } from './components/LegalLayout'
 import { asset, WHATSAPP_PHONE, WHATSAPP_DISPLAY } from './data'
 
 const STORAGE_KEY = 'gripcap_saved_cart_v1'
 
-export default function App() {
+function Home() {
   const [cart, setCart] = useState(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY)
@@ -69,6 +71,17 @@ export default function App() {
         <MessageCircle size={22} className="fill-black text-[#25D366]" />
         <span className="hidden sm:inline">WhatsApp · {WHATSAPP_DISPLAY}</span>
       </a>
+
+      <CookieBanner />
     </div>
   )
+}
+
+// Enrutado por ruta del servidor: la web principal vive en "/" y las páginas
+// legales en /aviso-legal, /privacidad, /cookies y /envios-y-devoluciones.
+// GitHub Pages sirve 404.html para esas rutas y el layout legal lee la ruta del
+// navegador para renderizar el documento correspondiente.
+export default function App() {
+  const route = currentRoute()
+  return route === '/' ? <Home /> : <LegalLayout />
 }
