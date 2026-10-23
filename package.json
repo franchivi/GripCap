@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "legal": "node scripts/generate-legal-pages.mjs",
+    "prebuild": "npm run legal",
     "build": "vite build",
     "preview": "vite preview"
   },
