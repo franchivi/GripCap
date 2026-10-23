@@ -56,7 +56,7 @@ export default function App() {
         <Footer />
       </div>
 
-      {/* Botón flotante de WhatsApp vinculado al 653418174 */}
+      {/* Botón flotante de WhatsApp vinculado al 658288233 */}
       <a
         id="floating-whatsapp"
         href={`https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent('Hola GripCap, quiero información o hacer un pedido de tapones personalizados')}`}

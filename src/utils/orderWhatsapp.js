@@ -219,7 +219,7 @@ export async function generateOrderSheetDataUrl(items) {
   ctx.fillText('PEDIDO GRIPCAP · TAPONES PERSONALIZADOS', 32, 48)
   ctx.fillStyle = '#9CA3AF'
   ctx.font = '15px sans-serif'
-  ctx.fillText(`Precio: ${eur(BASE_PRICE)} / par · WhatsApp: 653 418 174`, 32, 74)
+  ctx.fillText(`Precio: ${eur(BASE_PRICE)} / par · WhatsApp: 658 28 82 33`, 32, 74)
 
   for (let idx = 0; idx < items.length; idx++) {
     const item = items[idx]
@@ -310,7 +310,7 @@ export function buildWhatsAppText(items) {
 
 /**
  * Descarga la imagen del diseño, la copia al portapapeles (si el navegador lo permite)
- * y abre WhatsApp con el número 653418174 y los detalles del pedido.
+ * y abre WhatsApp con el número 658288233 y los detalles del pedido.
  */
 export async function sendOrderToWhatsApp(items) {
   if (!items || items.length === 0) return null

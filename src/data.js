@@ -4,8 +4,8 @@ export const asset = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\//,
 export const BASE_PRICE = 6 // € por par
 export const LOGO_FEE = 0 // € incluido en el precio por par
 
-export const WHATSAPP_PHONE = '34653418174'
-export const WHATSAPP_DISPLAY = '653 418 174'
+export const WHATSAPP_PHONE = '34658288233'
+export const WHATSAPP_DISPLAY = '658 28 82 33'
 
 export const discountFor = () => 0
 
