@@ -9,7 +9,7 @@ export const COMPANY = {
   postalCode: '14014',
   city: 'Córdoba',
   country: 'España',
-  email: 'hola@gripcap.es',
+  email: 'multiverso@outlook.com',
   phone: '+34 658 28 82 33',
   domain: 'www.gripcap.es',
   // Perfiles sociales: rellenar con las URLs reales para que aparezcan los
