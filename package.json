@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "legal": "node scripts/generate-legal-pages.mjs",
+    "prerender": "node scripts/prerender.mjs",
     "prebuild": "npm run legal",
     "build": "vite build",
     "preview": "vite preview"
@@ -19,6 +20,7 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.3",
     "autoprefixer": "^10.4.20",
+    "playwright": "^1.64.1",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.14",
     "vite": "^5.4.10"
