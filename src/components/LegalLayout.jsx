@@ -155,10 +155,10 @@ function LegalHeader() {
     <header className="sticky top-0 z-40 border-b border-ink-border bg-ink-darker/95 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6">
         <button onClick={goHome} className="flex items-center gap-3 transition hover:opacity-80">
-          <img src={asset('logo-3d.png')} alt="GripCap" className="h-10 w-10" />
-          <span className="font-display text-sm font-bold uppercase tracking-widest text-white">
-            GripCap
-          </span>
+          <img src={asset('logo.png')} alt="GripCap" className="h-8 w-auto mix-blend-screen sm:h-9" />
+
+
+
         </button>
         <button onClick={goHome} className="btn-ghost py-2 text-xs">
           <Home size={14} /> Inicio

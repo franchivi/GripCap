@@ -1,5 +1,9 @@
 // Resuelve rutas de /public respetando el `base` de Vite (necesario para GitHub Pages)
-export const asset = (path) => `${import.meta.env.BASE_URL}${path.replace(/^\//, '')}`
+export const asset = (path) => {
+  const base = import.meta.env.BASE_URL
+  const prefix = base === './' ? '/' : base
+  return `${prefix}${path.replace(/^\//, '')}`
+}
 
 export const BASE_PRICE = 6 // € por par
 export const LOGO_FEE = 0 // € incluido en el precio por par
