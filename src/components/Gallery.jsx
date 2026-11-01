@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Play, X, Maximize2 } from 'lucide-react'
+import { Play, X, Maximize2, Instagram } from 'lucide-react'
 import { asset } from '../data'
 
 const mediaItems = [
@@ -9,21 +9,37 @@ const mediaItems = [
     src: asset('gallery/1022.mp4'),
     poster: asset('gallery/tapon1.jpg'),
     alt: 'Vídeo 360º del tapón GripCap en aluminio anodizado y TPU',
-    cls: 'col-span-2 row-span-2',
+    cls: 'col-span-2 md:col-span-2 row-span-2',
     label: 'Vídeo 360º · Nuestro Tapón GripCap al Detalle',
   },
   {
     type: 'image',
     src: asset('gallery/anunciogripcap.jpg'),
     alt: 'Personaliza tu bici con GripCap por solo 6€ el par',
-    cls: 'col-span-2 row-span-2',
+    cls: 'col-span-2 md:col-span-2 row-span-2',
     label: 'Promoción Oficial · ¡Tu par de tapones por solo 6 €!',
+  },
+  {
+    type: 'image',
+    src: asset('gallery/escuela-mtb-victor-fernandez.jpg'),
+    alt: 'Tapones personalizados GripCap para Escuela MTB Víctor Fernández VF',
+    cls: 'col-span-2 md:col-span-2 row-span-2',
+    label: 'Diseño Personalizado · Escuela MTB Víctor Fernández',
+    instagramUrl: 'https://www.instagram.com/escuela_mtb_victorfernandez_vf/?hl=es',
+    instagramLabel: '@escuela_mtb_victorfernandez_vf',
+  },
+  {
+    type: 'image',
+    src: asset('gallery/tapon1.jpg'),
+    alt: 'Tapón GripCap personalizado Trotacerros MTB',
+    cls: 'col-span-2 md:col-span-2 row-span-2',
+    label: 'Diseño Personalizado · Trotacerros MTB',
   },
   {
     type: 'image',
     src: asset('gallery/bicimontana.jpg'),
     alt: 'Tapón GripCap montado en puño de MTB',
-    cls: 'col-span-2 md:col-span-2 row-span-2',
+    cls: 'col-span-2 md:col-span-1 row-span-2',
     label: 'Montaje MTB · Puño de montaña con tapón GripCap',
   },
   {
@@ -35,17 +51,10 @@ const mediaItems = [
   },
   {
     type: 'image',
-    src: asset('gallery/tapon1.jpg'),
-    alt: 'Tapón GripCap personalizado Trotacerros MTB',
-    cls: 'col-span-2 md:col-span-2 row-span-2',
-    label: 'Diseño Personalizado · Trotacerros MTB',
-  },
-  {
-    type: 'image',
     src: asset('gallery/caja-gripcap.jpg'),
     alt: 'Presentación de par de tapones personalizados GripCap en su estuche',
-    cls: 'col-span-2 md:col-span-2 row-span-2',
-    label: 'Presentación GripCap · Tu par personalizado listo para montar',
+    cls: 'col-span-2 md:col-span-1 row-span-2',
+    label: 'Presentación GripCap · Tu par listo para montar',
   },
 ]
 
@@ -96,8 +105,22 @@ export default function Gallery() {
             <div className="pointer-events-none absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white opacity-0 transition group-hover:opacity-100">
               {item.type === 'video' ? <Play size={15} /> : <Maximize2 size={15} />}
             </div>
-            <figcaption className="pointer-events-none absolute bottom-3 left-3 right-3 font-display text-xs font-bold uppercase tracking-wider text-white">
-              <span className="text-racing">●</span> {item.label}
+            <figcaption className="pointer-events-none absolute bottom-3 left-3 right-3 flex flex-wrap items-center justify-between gap-2 font-display text-xs font-bold uppercase tracking-wider text-white">
+              <span>
+                <span className="text-racing">●</span> {item.label}
+              </span>
+              {item.instagramUrl && (
+                <a
+                  href={item.instagramUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="pointer-events-auto inline-flex items-center gap-1.5 rounded border border-racing/60 bg-black/75 px-2.5 py-1 text-[11px] text-racing backdrop-blur-sm transition hover:bg-racing hover:text-black"
+                >
+                  <Instagram size={13} />
+                  <span>{item.instagramLabel || 'Instagram'}</span>
+                </a>
+              )}
             </figcaption>
           </motion.figure>
         ))}
@@ -139,8 +162,21 @@ export default function Gallery() {
                   className="max-h-[80vh] w-full object-contain"
                 />
               )}
-              <div className="border-t border-ink-border bg-ink-surface px-4 py-3 font-display text-xs font-bold uppercase tracking-wider text-white">
-                <span className="text-racing">●</span> {selected.label}
+              <div className="flex flex-wrap items-center justify-between gap-3 border-t border-ink-border bg-ink-surface px-4 py-3 font-display text-xs font-bold uppercase tracking-wider text-white">
+                <span>
+                  <span className="text-racing">●</span> {selected.label}
+                </span>
+                {selected.instagramUrl && (
+                  <a
+                    href={selected.instagramUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded border border-racing/60 bg-racing/15 px-3 py-1.5 text-xs text-racing transition hover:bg-racing hover:text-black"
+                  >
+                    <Instagram size={14} />
+                    <span>{selected.instagramLabel || 'Ver en Instagram'}</span>
+                  </a>
+                )}
               </div>
             </div>
           </motion.div>
