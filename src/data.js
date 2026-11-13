@@ -5,7 +5,7 @@ export const asset = (path) => {
   return `${prefix}${path.replace(/^\//, '')}`
 }
 
-export const BASE_PRICE = 6 // € por par
+export const BASE_PRICE = 8 // € por par
 export const LOGO_FEE = 0 // € incluido en el precio por par
 
 export const WHATSAPP_PHONE = '34658288233'

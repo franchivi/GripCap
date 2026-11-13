@@ -15,9 +15,9 @@ const mediaItems = [
   {
     type: 'image',
     src: asset('gallery/anunciogripcap.jpg'),
-    alt: 'Personaliza tu bici con GripCap por solo 6€ el par',
+    alt: 'Personaliza tu bici con GripCap por solo 8€ el par',
     cls: 'col-span-2 md:col-span-2 row-span-2',
-    label: 'Promoción Oficial · ¡Tu par de tapones por solo 6 €!',
+    label: 'Promoción Oficial · ¡Tu par de tapones por solo 8 €!',
   },
   {
     type: 'image',
